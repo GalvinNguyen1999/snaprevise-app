@@ -1,0 +1,26 @@
+version: "2.23.1"
+
+services:
+  snaprevise:
+    container_name: snaprevise
+    build: .
+    image: galvin/snaprevise
+    ports:
+      - "3000:3000"
+    depends_on:
+      - snaprevise_db
+  
+  snaprevise_db:
+    container_name: snaprevise_db
+    image: postgres:12
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=snaprevise
+      - POSTGRES_USER=snaprevise
+      - POSTGRES_PASSWORD=snaprevise123
+    volumes:
+      - snaprevise_db_data:/var/lib/postgresql/data
+
+volumes:
+  snaprevise_db_data: {}
