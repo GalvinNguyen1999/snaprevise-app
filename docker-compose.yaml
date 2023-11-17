@@ -6,7 +6,7 @@ services:
     build: .
     image: galvin/snaprevise
     ports:
-      - "3000:3000"
+      - "8017:8017"
     depends_on:
       - snaprevise_db
   
