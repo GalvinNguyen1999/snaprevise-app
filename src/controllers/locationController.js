@@ -5,7 +5,7 @@ import { StatusCodes } from 'http-status-codes'
 const createLocation = async (req, res, next) => {
   try {
     const location = await locationService.createLocation(req.query)
-    res.status(StatusCodes.CREATED).json(location)
+    return res.status(StatusCodes.CREATED).json(location)
   } catch (error) { next(error) }
 }
 
@@ -13,7 +13,7 @@ const createLocation = async (req, res, next) => {
 const getLoations = async (req, res, next) => {
   try {
     const locations = await locationService.getLoations()
-    res.status(StatusCodes.OK).json(locations)
+    return res.status(StatusCodes.OK).json(locations)
   } catch (error) { next(error) }
 }
 
@@ -21,7 +21,7 @@ const getLoations = async (req, res, next) => {
 const updateLocation = async (req, res, next) => {
   try {
     const location = await locationService.updateLocation(req.params.id, req.body)
-    res.status(StatusCodes.OK).json(location)
+    return res.status(StatusCodes.OK).json(location)
   } catch (error) { next(error) }
 }
 
@@ -29,7 +29,7 @@ const updateLocation = async (req, res, next) => {
 const deleteLocation = async (req, res, next) => {
   try {
     const location = await locationService.deleteLocation(req.params.id)
-    res.status(StatusCodes.OK).json(location)
+    return res.status(StatusCodes.OK).json(location)
   } catch (error) { next(error) }
 }
 
