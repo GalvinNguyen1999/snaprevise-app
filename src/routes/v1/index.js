@@ -1,5 +1,8 @@
 import express from 'express'
 import { locationRoute } from '~/routes/v1/locationRoute'
+import { userRoute } from '~/routes/v1/userRoute'
+import { authRoute } from '~/routes/v1/authRoute'
+import { adminRoute } from '~/routes/v1/admin'
 
 const ROUTE = express.Router()
 
@@ -7,6 +10,16 @@ const ROUTE = express.Router()
 ROUTE.get('/status', (req, res) => {
   res.send('API_V1 OK')
 })
+
+// Auth API_V1 route
+ROUTE.use('/auth', authRoute)
+
+// Admin API_V1 route
+ROUTE.use('/admin', adminRoute)
+
+
+// User API_V1 route
+ROUTE.use('/user', userRoute)
 
 // Location API_V1 route
 ROUTE.use('/location', locationRoute)

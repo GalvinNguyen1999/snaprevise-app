@@ -8,6 +8,7 @@ export const env = {
   BUILD_MODE: process.env.BUILD_MODE,
   JWT_SECRET: process.env.JWT_SECRET,
 
+  POSTGRESQL_HOST: process.env.POSTGRESQL_HOST,
   POSTGRESQL_USER: process.env.POSTGRESQL_USER,
   POSTGRESQL_NAME: process.env.POSTGRESQL_NAME,
   POSTGRESQL_PASSWORD: process.env.POSTGRESQL_PASSWORD,

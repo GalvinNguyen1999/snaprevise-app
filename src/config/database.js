@@ -8,7 +8,7 @@ export const sequelize = new Sequelize(
   env.POSTGRESQL_USER,
   env.POSTGRESQL_PASSWORD,
   {
-    host: env.APP_HOST,
+    host: env.APP_HOST, // POSTGRESQL_HOST
     dialect: env.DIALECT
   }
 )
