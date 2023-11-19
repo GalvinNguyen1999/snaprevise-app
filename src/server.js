@@ -4,6 +4,7 @@ import cors from 'cors'
 import { CONNECT_DB, CLOSE_DB } from '~/config/database'
 import exitHook from 'async-exit-hook'
 import { env } from '~/config/environment'
+import { errorHandlingMiddleware } from '~/middlewares/errorHandlingMiddleware'
 import { APIs_V1 } from './routes/v1'
 
 const startApp = async () => {
@@ -18,6 +19,9 @@ const startApp = async () => {
 
   // V1 APIs routes
   app.use('/v1', APIs_V1)
+
+  // Error handling middleware
+  app.use(errorHandlingMiddleware)
 
   // Start the server
   app.listen(env.APP_PORT, () => {
