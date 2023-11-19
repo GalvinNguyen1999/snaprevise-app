@@ -4,7 +4,10 @@ services:
   snaprevise:
     container_name: snaprevise
     build: .
-    image: galvin/snaprevise
+    env_file:
+      - .env
+    environment:
+      - POSTGRESQL_HOST=snaprevise_db
     ports:
       - "8017:8017"
     depends_on:
