@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken'
 import { env } from '~/config/environment'
 import { StatusCodes } from 'http-status-codes'
 
-// middleware authenticate
 export const authenticate = (req, res, next) => {
   const token = req.header('Authorization')
 
@@ -21,7 +20,6 @@ export const authenticate = (req, res, next) => {
   }
 }
 
-// middleware admin
 export const isAdmin = (req, res, next) => {
   if (req.user && req.user.role === 'admin') {
     next()

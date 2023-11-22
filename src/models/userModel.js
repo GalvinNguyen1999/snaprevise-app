@@ -1,49 +1,48 @@
 import { DataTypes } from 'sequelize'
 import { GET_DB, sequelize } from '~/config/database'
 
-const User = sequelize.define('users', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-    allowNull: false
-  },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validator: {
-      notEmpty: {
-        args: true,
-        msg: 'Name is required'
-      },
-      len: {
-        args: [3, 255],
-        msg: 'Name must be between 3 and 255 characters'
+const User = sequelize.define(
+  'users',
+  {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validator: {
+        notEmpty: {
+          args: true,
+          msg: 'Name is required'
+        },
+        len: {
+          args: [3, 255],
+          msg: 'Name must be between 3 and 255 characters'
+        }
       }
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validator: {
+        notEmpty: {
+          args: true,
+          msg: 'Password is required'
+        },
+        len: {
+          args: [3, 255],
+          msg: 'Password must be between 3 and 255 characters'
+        }
+      }
+    },
+    role: {
+      type: DataTypes.STRING,
+      defaultValue: 'user',
+      allowNull: false
     }
   },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validator: {
-      notEmpty: {
-        args: true,
-        msg: 'Password is required'
-      },
-      len: {
-        args: [3, 255],
-        msg: 'Password must be between 3 and 255 characters'
-      }
-    }
-  },
-  role: {
-    type: DataTypes.STRING,
-    defaultValue: 'user',
-    allowNull: false
+  {
+    paranoid: true
   }
-})
+)
 
-// create user
 const createUser = async (data) => {
   try {
     const user = await GET_DB().users.create(data)
@@ -51,7 +50,6 @@ const createUser = async (data) => {
   } catch (error) { throw new Error(error) }
 }
 
-// get user by name
 const getUserByName = async (name) => {
   try {
     const user = await GET_DB().users.findOne({ where: { name } })
@@ -59,7 +57,6 @@ const getUserByName = async (name) => {
   } catch (error) { throw new Error(error) }
 }
 
-// get user by id
 const getUserById = async (id) => {
   try {
     const user = await GET_DB().users.findOne({ where: { id } })
@@ -67,7 +64,6 @@ const getUserById = async (id) => {
   } catch (error) { throw new Error(error) }
 }
 
-// update user
 const updateUser = async (id, data) => {
   try {
     const user = await GET_DB().users.update(data, { where: { id } })
@@ -75,7 +71,6 @@ const updateUser = async (id, data) => {
   } catch (error) { throw new Error(error) }
 }
 
-// delete user
 const deleteUser = async (id) => {
   try {
     const user = await GET_DB().users.destroy({ where: { id } })
@@ -83,7 +78,6 @@ const deleteUser = async (id) => {
   } catch (error) { throw new Error(error) }
 }
 
-// get all user
 const getUsers = async () => {
   try {
     const users = await GET_DB().users.findAll()
@@ -91,7 +85,14 @@ const getUsers = async () => {
   } catch (error) { throw new Error(error) }
 }
 
-// assign Admin Role
+// get all user, including soft deleted
+const getAllUsers = async () => {
+  try {
+    const users = await GET_DB().users.findAll({ paranoid: false })
+    return users
+  } catch (error) { throw new Error(error) }
+}
+
 const assignAdminRole = async (id) => {
   try {
     const user = await GET_DB().users.update({ role: 'admin' }, { where: { id } })
@@ -99,7 +100,6 @@ const assignAdminRole = async (id) => {
   } catch (error) { throw new Error(error) }
 }
 
-// assign User Role
 const assignUserRole = async (id) => {
   try {
     const user = await GET_DB().users.update({ role: 'user' }, { where: { id } })
@@ -116,5 +116,6 @@ export const userModel = {
   updateUser,
   getUsers,
   deleteUser,
-  getUserById
+  getUserById,
+  getAllUsers
 }

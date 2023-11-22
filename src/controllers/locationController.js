@@ -1,7 +1,6 @@
 import { locationService } from '~/services/locationService'
 import { StatusCodes } from 'http-status-codes'
 
-// create location
 const createLocation = async (req, res, next) => {
   try {
     const location = await locationService.createLocation(req.query)
@@ -9,7 +8,6 @@ const createLocation = async (req, res, next) => {
   } catch (error) { next(error) }
 }
 
-// get all location
 const getLoations = async (req, res, next) => {
   try {
     const locations = await locationService.getLoations()
@@ -17,7 +15,6 @@ const getLoations = async (req, res, next) => {
   } catch (error) { next(error) }
 }
 
-// update location
 const updateLocation = async (req, res, next) => {
   try {
     const location = await locationService.updateLocation(req.params.id, req.body)
@@ -25,7 +22,6 @@ const updateLocation = async (req, res, next) => {
   } catch (error) { next(error) }
 }
 
-// delete location
 const deleteLocation = async (req, res, next) => {
   try {
     const location = await locationService.deleteLocation(req.params.id)

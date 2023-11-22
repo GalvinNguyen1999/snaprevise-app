@@ -1,11 +1,11 @@
 import { userModel } from '~/models/userModel'
 import bcrypt from 'bcrypt'
 
-const SALT = 10
-// update user
+
 const updateUser = async (id, data) => {
   try {
     const { password } = data
+    const SALT = 10
 
     if (password) {
       const hashedPassword = await bcrypt.hash(password, SALT)
@@ -17,7 +17,6 @@ const updateUser = async (id, data) => {
   } catch (error) { throw new Error(error) }
 }
 
-// delete user
 const deleteUser = async (id) => {
   try {
     const user = await userModel.deleteUser(id)
@@ -25,7 +24,6 @@ const deleteUser = async (id) => {
   } catch (error) { throw new Error(error) }
 }
 
-// get user by id
 const getUserById = async (id) => {
   try {
     const user = await userModel.getUserById(id)
