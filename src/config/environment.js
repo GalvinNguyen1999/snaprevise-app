@@ -3,8 +3,8 @@ import 'dotenv/config.js'
 export const env = {
   APP_PORT: process.env.APP_PORT,
   APP_HOST: process.env.APP_HOST,
-  OPENCAGE_KEY: process.env.OPENCAGE_KEY,
-  OPENCAGE_URL: process.env.OPENCAGE_URL,
+  GOOGLE_KEY: process.env.GOOGLE_KEY,
+  GOOGLE_URL: process.env.GOOGLE_URL,
   BUILD_MODE: process.env.BUILD_MODE,
   JWT_SECRET: process.env.JWT_SECRET,
 

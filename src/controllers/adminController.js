@@ -1,7 +1,6 @@
 import { adminService } from '~/services/adminService'
 import { StatusCodes } from 'http-status-codes'
 
-// get all user
 const getUsers = async (req, res, next) => {
   try {
     const users = await adminService.getUsers()
@@ -9,7 +8,6 @@ const getUsers = async (req, res, next) => {
   } catch (error) { next(error) }
 }
 
-// assign Admin Role
 const assignAdminRole = async (req, res, next) => {
   try {
     const user = await adminService.assignAdminRole(req.params.id)
@@ -17,7 +15,6 @@ const assignAdminRole = async (req, res, next) => {
   } catch (error) { next(error) }
 }
 
-// assign User Role
 const assignUserRole = async (req, res, next) => {
   try {
     const user = await adminService.assignUserRole(req.params.id)
@@ -25,8 +22,16 @@ const assignUserRole = async (req, res, next) => {
   } catch (error) { next(error) }
 }
 
+const updateStatus = async (req, res, next) => {
+  try {
+    const newStatus = await adminService.updateStatus(req.params.id, req.body)
+    return res.status(StatusCodes.OK).json(newStatus)
+  } catch (error) { next(error) }
+}
+
 export const adminController = {
   getUsers,
   assignAdminRole,
-  assignUserRole
+  assignUserRole,
+  updateStatus
 }

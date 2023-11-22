@@ -1,49 +1,43 @@
-// Define the Location model
 import { DataTypes } from 'sequelize'
 import { GET_DB } from '~/config/database'
 import { sequelize } from '~/config/database'
 
 // Define the Location model
-const locations = sequelize.define('locations', {
-  name: {
-    type: DataTypes.STRING
+const locations = sequelize.define(
+  'locations',
+  {
+    name: {
+      type: DataTypes.STRING
+    },
+    location: {
+      type: DataTypes.JSON,
+      allowNull: false
+    },
+    address: {
+      type: DataTypes.STRING
+    },
+    type: {
+      type: DataTypes.STRING
+    },
+    status: {
+      type: DataTypes.STRING,
+      defaultValue: 'pending'
+    },
+    area: {
+      type: DataTypes.FLOAT
+    }
   },
-  latitude: {
-    type: DataTypes.FLOAT,
-    allowNull: false
-  },
-  longitude: {
-    type: DataTypes.FLOAT,
-    allowNull: false
-  },
-  address: {
-    type: DataTypes.STRING
-  },
-  type: {
-    type: DataTypes.STRING
-  },
-  status: {
-    type: DataTypes.STRING
-  }
-})
+  { paranoid: true }
+)
 
-// locations.beforeCreate((location) => {
-//   location.location = { type: 'Point', coordinates: [location.latitude, location.longitude] };
-// });
-
-// create new location
 const createLocation = async (data) => {
   try {
-    const location = await GET_DB().locations.create({
-      ...data,
-      status: 'pending'
-    })
-
+    const location = await GET_DB().locations.create(data)
     return location
   } catch (error) { throw new Error(error) }
 }
 
-// get all location
+// get all non-soft deleted locations
 const getLoations = async () => {
   try {
     const locations = await GET_DB().locations.findAll()
@@ -51,7 +45,14 @@ const getLoations = async () => {
   } catch (error) { throw new Error(error) }
 }
 
-// update location
+// get all locations, including soft deletions
+const getAllLocations= async () => {
+  try {
+    const locations = await GET_DB().locations.findAll({ paranoid: false })
+    return locations
+  } catch (error) { throw new Error(error) }
+}
+
 const updateLocation = async (id, data) => {
   try {
     const location = await GET_DB().locations.update(data, { where: { id } })
@@ -59,11 +60,17 @@ const updateLocation = async (id, data) => {
   } catch (error) { throw new Error(error) }
 }
 
-// delete location
 const deleteLocation = async (id) => {
   try {
     const location = await GET_DB().locations.destroy({ where: { id } })
     return location
+  } catch (error) { throw new Error(error) }
+}
+
+const updateStatus = async (id, status) => {
+  try {
+    const newStatus = await GET_DB().locations.update({ status }, { where: { id } })
+    return newStatus
   } catch (error) { throw new Error(error) }
 }
 
@@ -72,5 +79,7 @@ export const locationModel = {
   createLocation,
   getLoations,
   updateLocation,
-  deleteLocation
+  deleteLocation,
+  updateStatus,
+  getAllLocations
 }
