@@ -33,7 +33,13 @@ const signIn = async (data) => {
 
     if (!isMatch) { throw new Error('Incorrect password!') }
 
-    const token = jwt.sign({ id: user.id }, env.JWT_SECRET, { expiresIn: '1d' })
+    const deconstructedUser = {
+      id: user.id,
+      name: user.name,
+      role: user.role
+    }
+
+    const token = jwt.sign(deconstructedUser, env.JWT_SECRET, { expiresIn: '1d' })
 
     return { user, token }
   } catch (error) { throw new Error(error) }
