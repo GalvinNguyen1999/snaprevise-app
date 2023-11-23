@@ -52,13 +52,13 @@ To run this project, you will need to add the following environment variables to
 
 `JWT_SECRET='snaprevise'`
 
-`POSTGRESQL_HOST=''`
+`POSTGRESQL_HOST='snaprevise'`
 
-`POSTGRESQL_USER=''`
+`POSTGRESQL_USER='snaprevise'`
 
-`POSTGRESQL_NAME=''`
+`POSTGRESQL_NAME='snaprevise'`
 
-`POSTGRESQL_PASSWORD=''`
+`POSTGRESQL_PASSWORD='snaprevise123'`
 
 `POSTGRESQL_PORT=5432`
 
