@@ -78,10 +78,19 @@ Start the server
 ```
 ## API Reference
 
-#### Create User
+#### Sign Up
 
 ```bash
   curl --location 'http://localhost:8017/v1/auth/sign-up' \
+  --header 'Content-Type: application/x-www-form-urlencoded' \
+  --data-urlencode 'name=normaluser' \
+  --data-urlencode 'password=P@ssword123'
+```
+
+#### Sign In
+
+```bash
+   curl --location 'http://localhost:8017/v1/auth/sign-in' \
   --header 'Content-Type: application/x-www-form-urlencoded' \
   --data-urlencode 'name=normaluser' \
   --data-urlencode 'password=P@ssword123'
