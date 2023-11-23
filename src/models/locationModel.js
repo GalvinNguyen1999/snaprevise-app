@@ -53,6 +53,13 @@ const getAllLocations= async () => {
   } catch (error) { throw new Error(error) }
 }
 
+const getLocationByName = async (name) => {
+  try {
+    const location = await GET_DB().locations.findOne({ where: { name } })
+    return location
+  } catch (error) { throw new Error(error) }
+}
+
 const updateLocation = async (id, data) => {
   try {
     const location = await GET_DB().locations.update(data, { where: { id } })
@@ -81,5 +88,6 @@ export const locationModel = {
   updateLocation,
   deleteLocation,
   updateStatus,
-  getAllLocations
+  getAllLocations,
+  getLocationByName
 }

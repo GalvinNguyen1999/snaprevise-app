@@ -20,10 +20,17 @@ export const authenticate = (req, res, next) => {
   }
 }
 
-export const isAdmin = (req, res, next) => {
-  if (req.user && req.user.role === 'admin') {
+export const authorizeUser = (requiredRole) => {
+  return (req, res, next) => {
+    if (!req.user) {
+      return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Unauthorized - User not logged in' })
+    }
+
+    const userRoles = req.user.role
+    if (!userRoles.includes(requiredRole)) {
+      return res.status(StatusCodes.FORBIDDEN).json({ message: 'Forbidden - Insufficient permissions' })
+    }
+
     next()
-  } else {
-    return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Unauthorized' })
   }
 }

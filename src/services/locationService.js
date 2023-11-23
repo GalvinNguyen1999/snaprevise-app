@@ -44,7 +44,11 @@ const processAndSavePlaces = async (location, places, radius) => {
       }
 
       const locationType = determineLocationType(types)
+
       if (locationType !== 'Unknown') {
+        const existLocation = await locationModel.getLocationByName(name)
+        if (existLocation) { return }
+
         await locationModel.createLocation({ name, location, address: vicinity, type: locationType, area })
       }
     })
